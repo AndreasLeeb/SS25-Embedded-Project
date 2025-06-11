@@ -1,0 +1,17 @@
+{
+    "temp": [
+        25,
+        30
+    ],
+    "light": [
+        501,
+        800
+    ],
+    "moisture": [
+        20,
+        40
+    ],
+    "watering_enabled": 0,
+    "minimum_moisture": 25,
+    "pumping_time": 3
+}
