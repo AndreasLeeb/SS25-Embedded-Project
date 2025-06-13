@@ -1,0 +1,111 @@
+﻿{% extends "bootstrap/base.html" %}
+{% block title %}HydroHarmony{% endblock %}
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="{{ url_for('.static', filename='css/view.css') }}">
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('.static', filename='js/view.js') }}"></script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <h1>HydroHarmony Embedded Systems Project</h1>
+            </div>
+        </div>
+        <div class="row">
+            <h2>Plant State</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-default" onclick="fetchSensorData()">
+                    <i class="fa fa-refresh"></i> Refresh
+                </button>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-default" onclick="triggerShade()" id="shadeButton">
+                    <i class="fa fa-cloud"></i> Activate Shade
+                </button>
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-default" onclick="triggerPump()" id="manualPumpButton">
+                    <i class="fa fa-tint"></i> Activate Pump
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive c-card-img center-block"
+                             src="{{ url_for('.static', filename='img/soil-analysis.png') }}">
+                        <h3 class="text-center">Soil Moisture</h3>
+                        <p class="text-center"><span id="moistureVal"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive c-card-img center-block"
+                             src="{{ url_for('.static', filename='img/hot.png') }}">
+                        <h3 class="text-center">Temperature</h3>
+                        <p class="text-center"><span id="temperatureVal"></span> °C</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <img class="img-responsive c-card-img center-block"
+                             src="{{ url_for('.static', filename='img/sunlight.png') }}">
+                        <h3 class="text-center">Light Level</h3>
+                        <p class="text-center"><span id="lightVal"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h2>Settings</h2>
+        </div>
+        <div class="row">
+            <form>
+                <h3>Automatic Watering</h3>
+                <div class="form-group">
+                    <input type="checkbox" class="form-check-input" id="wateringEnabled">
+                    <label class="form-check-label" for="wateringEnabled">Automatic watering enabled</label>
+                </div>
+                <div class="form-group" id="minMoistureGroup">
+                    <label for="minMoisture">Minimum soil moisture</label>
+                    <input type="number" class="form-control" id="minMoisture" placeholder="Minimum soil moisture" step="any">
+                </div>
+                <div class="form-group">
+                    <label for="pumpingTime">Pumping time (s)</label>
+                    <input type="number" class="form-control" id="pumpingTime" placeholder="Pumping time (s)" step="any">
+                </div>
+                <hr/>
+                <h3>Plant Health Indicator</h3>
+                <div class="form-group">
+                    <label for="healthMinTemp">Minimum temperature</label>
+                    <input type="number" class="form-control" id="healthMinTemp" placeholder="Minimum temperature" step="any">
+                </div>
+                <div class="form-group">
+                    <label for="healthMaxTemp">Maximum temperature</label>
+                    <input type="number" class="form-control" id="healthMaxTemp" placeholder="Maximum temperature" step="any">
+                </div>
+                <div class="form-group">
+                    <label for="healthMinMoist">Minimum soil moisture</label>
+                    <input type="number" class="form-control" id="healthMinMoist" placeholder="Minimum soil moisture" step="any">
+                </div>
+                <div class="form-group">
+                    <label for="healthMaxMoist">Maximum soil moisture</label>
+                    <input type="number" class="form-control" id="healthMaxMoist" placeholder="Maximum soil moisture" step="any">
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
